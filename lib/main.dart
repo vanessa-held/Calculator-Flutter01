@@ -16,7 +16,23 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColor: Colors.amber,
       ),
-      home: CalculatorPage(),
+      home: Splash(),
     );
+  }
+}
+
+class Splash extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new SplashScreen(
+        seconds: 7,
+        navigateAfterSeconds: new CalculatorPage(),
+        title: new Text(
+          'Bem vindo',
+          style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 50.0),
+        ),
+        backgroundColor: Colors.deepOrange,
+        styleTextUnderTheLoader: new TextStyle(),
+        loaderColor: Colors.black);
   }
 }
