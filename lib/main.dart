@@ -25,7 +25,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new SplashScreen(
-        seconds: 7,
+        seconds: 5,
         navigateAfterSeconds: new CalculatorPage(),
         title: new Text(
           'Bem vindo',

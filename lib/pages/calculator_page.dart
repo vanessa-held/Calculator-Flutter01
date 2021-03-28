@@ -1,5 +1,6 @@
 import 'package:calculadora01/controllers/calculator_contoller.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class CalculatorPage extends StatefulWidget {
   @override
@@ -31,6 +32,22 @@ class _CalculatorPageState extends State<CalculatorPage> {
       title: Text('Calculadora', style: TextStyle(color: Colors.white)),
       backgroundColor: Colors.black,
       centerTitle: true,
+      actions: <Widget>[
+        new IconButton(
+          icon: new Icon(Icons.share),
+          onPressed: () {
+            Share.share('check out my website https://example.com');
+          },
+        ),
+      ],
+      iconTheme: IconThemeData(
+        color: Colors.white,
+      ),
+      textTheme: TextTheme(
+          title: TextStyle(
+        color: Colors.white,
+        fontSize: 20.0,
+      )),
     );
   }
 
