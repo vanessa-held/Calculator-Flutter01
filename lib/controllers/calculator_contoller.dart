@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class CalculatorController {
   static const kZero = '0';
   static const kMemoryFirst = 0;
@@ -12,6 +14,7 @@ class CalculatorController {
   String _operation;
   bool _usedOperation;
   String result;
+  String resultCalculate = '';
 
   CalculatorController() {
     _clear();
@@ -22,6 +25,7 @@ class CalculatorController {
     _memories.setAll(kMemoryFirst, kMemoryClear);
     _currentMemoryIndex = kMemoryFirst;
     _operation = kOperationNull;
+    resultCalculate = '';
     _usedOperation = false;
   }
 
@@ -54,6 +58,7 @@ class CalculatorController {
     if (_currentMemoryIndex == kMemoryFirst) {
       _currentMemoryIndex++;
     } else {
+      resultCalculate = '${_memories[0]} $_operation ${_memories[1]}';
       _memories[kMemoryFirst] = _calculate();
     }
 

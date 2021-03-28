@@ -9,7 +9,6 @@ class CalculatorPage extends StatefulWidget {
 
 class _CalculatorPageState extends State<CalculatorPage> {
   final _controller = CalculatorController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +17,11 @@ class _CalculatorPageState extends State<CalculatorPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Divider(color: Colors.white24),
+          _builHistory(),
+          Divider(color: Colors.white24),
           _buildDisplay(text: _controller.result),
-          Divider(color: Colors.white),
+          Divider(color: Colors.white24),
           _buildKeyboard(),
         ],
       ),
@@ -36,7 +38,8 @@ class _CalculatorPageState extends State<CalculatorPage> {
         new IconButton(
           icon: new Icon(Icons.share),
           onPressed: () {
-            Share.share('check out my website https://example.com');
+            Share.share(
+                'Olhe o código desse aplicativo! https://github.com/vanessa-held/Calculator-Flutter01');
           },
         ),
       ],
@@ -49,6 +52,19 @@ class _CalculatorPageState extends State<CalculatorPage> {
         fontSize: 20.0,
       )),
     );
+  }
+
+  Widget _builHistory() {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        alignment: Alignment.bottomRight,
+        height: 70,
+        child: Text(
+          _controller.resultCalculate,
+          textAlign: TextAlign.end,
+          style: TextStyle(
+              fontFamily: 'Calculator', color: Colors.white, fontSize: 50),
+        ));
   }
 
   Widget _buildDisplay({String text}) {
@@ -69,7 +85,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
     final height = MediaQuery.of(context).size.height;
     return Container(
       color: Colors.black,
-      height: 450,
+      height: height * 0.65 > 460.0 ? 460 : height * 0.65,
       child: Column(
         children: [
           _buildKeyboardline1(),
