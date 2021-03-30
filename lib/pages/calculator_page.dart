@@ -1,6 +1,7 @@
 import 'package:calculadora01/controllers/calculator_contoller.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class CalculatorPage extends StatefulWidget {
   @override
@@ -59,8 +60,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.bottomRight,
         height: 70,
-        child: Text(
+        child: AutoSizeText(
           _controller.resultCalculate,
+          maxLines: 2,
           textAlign: TextAlign.end,
           style: TextStyle(
               fontFamily: 'Calculator', color: Colors.white, fontSize: 50),

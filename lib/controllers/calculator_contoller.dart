@@ -7,12 +7,13 @@ class CalculatorController {
   static const kOperationNull = null;
   static const kPoint = ',';
   static const kEmpty = '';
-  static const kOperations = ['+', '-', 'x', '/', '%', '='];
+  static const kOperations = ['+', '-', 'X', '/', '%', '='];
 
   List<double> _memories = [0.0, 0.0];
   int _currentMemoryIndex = 0;
   String _operation;
   bool _usedOperation;
+  bool _usedEqual;
   String result;
   String resultCalculate = '';
 
@@ -27,14 +28,17 @@ class CalculatorController {
     _operation = kOperationNull;
     resultCalculate = '';
     _usedOperation = false;
+    _usedEqual = false;
   }
 
-  void _deleteDigit() {
+  bool _deleteDigit() {
     final length = result.length;
     if (length > 1) {
       result = result.substring(0, length - 1);
+      return true;
     } else {
       result = kZero;
+      return false;
     }
   }
 
@@ -46,7 +50,7 @@ class CalculatorController {
     result += digit;
 
 //converter ponto para virgula
-    _memories[_currentMemoryIndex] = double.parse(
+    _memories[_currentMemoryIndex] = double.tryParse(
       result.replaceAll(kPoint, '.'),
     );
     _usedOperation = false;
@@ -57,12 +61,20 @@ class CalculatorController {
 
     if (_currentMemoryIndex == kMemoryFirst) {
       _currentMemoryIndex++;
-    } else {
-      resultCalculate = '${_memories[0]} $_operation ${_memories[1]}';
+    } else if (!_usedEqual || (_usedEqual && operation == '=')) {
+      if (resultCalculate.isEmpty)
+        resultCalculate = '${_memories[0]} $_operation ${_memories[1]}';
+      else
+        resultCalculate += ' $_operation ${_memories[1]}';
       _memories[kMemoryFirst] = _calculate();
     }
 
-    if (operation != '=') _operation = operation;
+    if (operation != '=') {
+      _operation = operation;
+      _usedEqual = false;
+    } else {
+      _usedEqual = true;
+    }
 
     _outputFormat();
     _usedOperation = true;
@@ -77,9 +89,10 @@ class CalculatorController {
   double _calculate() {
     if (_operation == '+') return _memories[0] + _memories[1];
     if (_operation == '-') return _memories[0] - _memories[1];
-    if (_operation == 'x') return _memories[0] * _memories[1];
+    if (_operation == 'X') return _memories[0] * _memories[1];
     if (_operation == '/') return _memories[0] / _memories[1];
     if (_operation == '%') return _memories[0] % _memories[1];
+
     return 0.0;
   }
 
@@ -89,8 +102,10 @@ class CalculatorController {
     } else if (command == 'DEL') {
       _deleteDigit();
     } else if (kOperations.contains(command)) {
+      // if (command != '=') resultCalculate += ' $command';
       _setOperation(command);
     } else {
+      //resultCalculate += ' $command';
       _addDigit(command);
     }
   }
